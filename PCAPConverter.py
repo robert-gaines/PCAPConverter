@@ -17,13 +17,9 @@ class Window(QWidget):
         self.setWindowTitle('PCAP Converter')
         self.setGeometry(800,100,500,800)
         #
-        dlg = QFileDialog()
-        dlg.setFileMode(QFileDialog.AnyFile)
-        dlg.setFilter("Text files (*.txt)")
-        filenames = QStringList()
-
-        if dlg.exec_():
-            filenames = dlg.selectedFiles()
+        button = QPushButton("Upload", self)
+        button.clicked.connect(self.GetFile)
+        #
 
 
 if(__name__ == '__main__'):
