@@ -24,11 +24,11 @@ class Window(QWidget):
         self.parse_button = QPushButton("Convert PCAP", self)
         self.parse_button.clicked.connect(self.GetFile)
         #
-        self.format_label      = QLabel("Format")        
-        self.format_combo_box  = QComboBox() 
+        self.format_label      = QLabel("Format")
+        self.format_combo_box  = QComboBox()
         self.format_combo_box.addItem('CSV')
         self.format_combo_box.addItem('XLSX')
-        self.format_combo_box.addItem('TXT')  
+        self.format_combo_box.addItem('TXT')
         #
         main_layout              = QFormLayout()
         self.vertical_button_box = QVBoxLayout()
