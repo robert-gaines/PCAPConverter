@@ -335,12 +335,7 @@ class PcapToXLSX():
             #
             return output_filename
             #
-        except Exception as e:
+        except:
             #
-            return e
+            return False
 
-# cap = PcapToXLSX('Sample.pcap')
-
-# fileName = cap.ConvertToXLSX()
-
-# print(fileName)

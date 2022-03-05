@@ -1,9 +1,13 @@
 #!/usr/bin/env python3
 
+_AUTH_ = 'RWG' # 03042022
+
 try:
     from PyQt5.QtWidgets import *
     from PyQt5.QtCore import *
     from PCAPToXLSX import *
+    from PCAPToText import *
+    from PCAPToCSV import *
     import time
     import sys
     import os
@@ -50,21 +54,47 @@ class Window(QWidget):
 
     def ConvertPCAP(self):
         #
+        self.status_label.setText("Status: Converting PCAP...")
+        self.status_label.setStyleSheet("background-color: orange")
+        self.status_label.repaint()
+        #
         ParsingOption = self.format_combo_box.currentText()
         #
         if(ParsingOption == 'XLSX'):
-            self.status_label.setText("Status: Converting PCAP to XLSX...")
-            self.status_label.setStyleSheet("background-color: orange")
             capture = PcapToXLSX(self.rawCapture)
             result = capture.ConvertToXLSX()
             if(result is not False):
                 self.status_label.setText("Status: Successful conversion from PCAP to XLSX")
                 self.status_label.setStyleSheet("background-color: green")
                 converted_file_path = os.path.abspath(str(result))
-                time.sleep(1)
-                self.status_label.setText("XLSX File may be located at: %s " % converted_file_path)
+                #time.sleep(3)
+                #self.status_label.setText("XLSX File may be located at: %s " % converted_file_path)
             else:
                 self.status_label.setText("Status: Failed to convert PCAP to XLSX")
+                self.status_label.setStyleSheet("background-color: red")
+        if(ParsingOption == 'CSV'):
+            capture = PCAPToCSV(self.rawCapture)
+            result  = capture.ConvertToCSV()
+            if(result is not False):
+                self.status_label.setText("Status: Successful conversion from PCAP to CSV")
+                self.status_label.setStyleSheet("background-color: green")
+                converted_file_path = os.path.abspath(str(result))
+                #time.sleep(3)
+                #self.status_label.setText("CSV File may be located at: %s " % converted_file_path)
+            else:
+                self.status_label.setText("Status: Failed to convert PCAP to CSV")
+                self.status_label.setStyleSheet("background-color: red")
+        if(ParsingOption == 'TXT'):
+            capture = PCAPToText(self.rawCapture)
+            result  = capture.ConvertToText()
+            if(result is not False):
+                self.status_label.setText("Status: Successful conversion from PCAP to TXT")
+                self.status_label.setStyleSheet("background-color: green")
+                converted_file_path = os.path.abspath(str(result))
+                #time.sleep(3)
+                #self.status_label.setText("TXT File may be located at: %s " % converted_file_path)
+            else:
+                self.status_label.setText("Status: Failed to convert PCAP to TXT")
                 self.status_label.setStyleSheet("background-color: red")
         else:
             return
@@ -76,10 +106,9 @@ class Window(QWidget):
         if(os.path.exists(captureFile[0])):
             self.rawCapture = captureFile[0]
             self.status_label.setText("Status: Valid PCAP Loaded - Ready to Parse")
-            self.status_label.setStyleSheet("background-color: blue")
+            self.status_label.setStyleSheet("background-color: yellow")
         else:
             return
-
 
 if(__name__ == '__main__'):
     app = QApplication(sys.argv)
